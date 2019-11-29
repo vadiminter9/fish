@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i=0; i<15; i++)
+        for(int i=0; i<8; i++)
 		{
 			Instantiate(fish[i]);
 		}
