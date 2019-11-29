@@ -5,5 +5,5 @@ using UnityEngine;
 public static class CrossSceneInformation
 {
     public static string Type;
-    public static int[] Fishes = new int[8];
+    public static Dictionary<string, int> Fishes = new Dictionary<string, int>();
 }

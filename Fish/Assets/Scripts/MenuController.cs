@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class MenuController : MonoBehaviour
 
     public GameObject InputFieldPrefab;
     public GameObject TextPrefab;
+    public GameObject SizePanel;
 
     int index = 0;
 
@@ -58,7 +60,7 @@ public class MenuController : MonoBehaviour
     {
         var panel = GameObject.Find("MenuPanel");
         var addButton = GameObject.Find("Add");
-        var startButton = GameObject.Find("Start");
+        var startButton = GameObject.Find("Run");
 
         if (IsColor)
         {
@@ -80,18 +82,16 @@ public class MenuController : MonoBehaviour
         }
         else if (IsSize)
         {
-            var text = Instantiate(TextPrefab);
-            text.transform.parent = panel.transform;
-            text.transform.localPosition = new Vector3(text.transform.localPosition.x, text.transform.localPosition.y, 0);
-            text.transform.localScale = new Vector3(1, 1, 1);
-            text.GetComponent<Text>().text = colors[index];
-            text.tag = "SZInf";
-
-            var inputField = Instantiate(InputFieldPrefab);
-            inputField.transform.parent = panel.transform;
-            inputField.transform.localPosition = new Vector3(inputField.transform.localPosition.x, inputField.transform.localPosition.y, 0);
-            inputField.transform.localScale = new Vector3(1, 1, 1);
-            inputField.tag = "SZ";
+            if (index < 8)
+            {
+                var sizePanel = Instantiate(SizePanel);
+                sizePanel.transform.parent = panel.transform;
+                sizePanel.transform.localPosition = new Vector3(sizePanel.transform.localPosition.x, sizePanel.transform.localPosition.y, 0);
+                sizePanel.transform.localScale = new Vector3(1, 1, 1);
+                sizePanel.GetComponentInChildren<Text>().text = colors[index];
+                sizePanel.GetComponentsInChildren<InputField>().Where(x => x.tag == "Name").First().placeholder.GetComponent<Text>().text = "Name";
+                sizePanel.GetComponentsInChildren<InputField>().Where(x => x.tag == "SZ").First().placeholder.GetComponent<Text>().text = "Size";
+            }
         }
 
         addButton.transform.SetAsLastSibling();
@@ -106,51 +106,27 @@ public class MenuController : MonoBehaviour
         {
             CrossSceneInformation.Type = "Count";
 
-            var inputFieldsGameObjects = GameObject.FindGameObjectsWithTag("CLR");
-            List<InputField> fields = new List<InputField>();
-            foreach (var gameObject in inputFieldsGameObjects)
+            var colorInputFields = GameObject.FindObjectsOfType<InputField>().Where(x => x.tag == "CLR");
+
+            var iteration = 0;
+            foreach (var field in colorInputFields)
             {
-                fields.Add(gameObject.GetComponent<InputField>());
+                CrossSceneInformation.Fishes.Add(colors[iteration], Convert.ToInt32(field.text));
+                iteration++;
             }
-
-            int crossSceneInfoIndex = 0;
-
-            foreach (var field in fields)
-            {
-                CrossSceneInformation.Fishes[crossSceneInfoIndex] = Convert.ToInt32(field.text);
-                crossSceneInfoIndex++;
-            }
-
-            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Length)
-            {
-                CrossSceneInformation.Fishes[crossSceneInfoIndex] = 0;
-                crossSceneInfoIndex++;
-            }
-
         }
         else if (IsSize)
         {
             CrossSceneInformation.Type = "Size";
 
-            var inputFieldsGameObjects = GameObject.FindGameObjectsWithTag("SZ");
-            List<InputField> fields = new List<InputField>();
-            foreach (var gameObject in inputFieldsGameObjects)
-            {
-                fields.Add(gameObject.GetComponent<InputField>());
-            }
+            var sizePanels = GameObject.FindGameObjectsWithTag("SizePanel");
 
-            int crossSceneInfoIndex = 0;
-
-            foreach (var field in fields)
+            foreach (var panel in sizePanels)
             {
-                CrossSceneInformation.Fishes[crossSceneInfoIndex] = Convert.ToInt32(field.text);
-                crossSceneInfoIndex++;
-            }
-
-            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Length)
-            {
-                CrossSceneInformation.Fishes[crossSceneInfoIndex] = 0;
-                crossSceneInfoIndex++;
+                string name = panel.GetComponentsInChildren<InputField>().Where(x => x.tag == "Name").FirstOrDefault().text;
+                var sizeInputValue = panel.GetComponentsInChildren<InputField>().Where(x => x.tag == "SZ").FirstOrDefault().text;
+                int size = Convert.ToInt32(sizeInputValue);
+                CrossSceneInformation.Fishes.Add(name, size);
             }
         }
 

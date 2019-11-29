@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -17,7 +19,7 @@ public class GameController : MonoBehaviour
         this.GenerateFish(CrossSceneInformation.Fishes, CrossSceneInformation.Type);
     }
 
-    void GenerateFish(int[] fishes, string type)
+    void GenerateFish(Dictionary<string, int> fishes, string type)
     {
         if (type == "Count")
         {
@@ -29,40 +31,45 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void AddFishByAmount(int[] fishes)
+    private void AddFishByAmount(Dictionary<string, int> fishTypes)
     {
-        for (int i = 0; i < fishes.Length; i++)
+        int index = 0;
+        foreach (var fishType in fishTypes)
         {
-            for (int j = 0; j < fishes[i]; j++)
+            for (int k = 0; k < fishType.Value; k++)
             {
-                Instantiate(fish[i]);
+                var newFish = Instantiate(fish[index]);
+                Destroy(newFish.GetComponentInChildren<TextMeshPro>());
             }
+            index++;
         }
     }
 
-    private void AddFishBySize(int[] fishes)
+    private void AddFishBySize(Dictionary<string, int> fishTypes)
     {
-        double totalSum = this.GetTotalValue(fishes);
+        double totalSum = this.GetTotalValue(fishTypes);
 
         float difference = 0.0125f;
 
-        for (int i = 0; i < fishes.Length; i++)
+        int index = 0;
+        foreach (var fishType in fishTypes)
         {
-            if (fishes[i] != 0)
-            {
-                float toIncrease = (float)(0.25 + difference * GetPercent(fishes[i], totalSum));
-                fish[i].transform.localScale = new Vector3(toIncrease, toIncrease, toIncrease);
-                Instantiate(fish[i]);
-            }
+            float toIncrease = (float)(0.25 + difference * GetPercent(fishType.Value, totalSum));
+            fish[index].transform.localScale = new Vector3(toIncrease, toIncrease, toIncrease);
+
+            var newFish = Instantiate(fish[index]);
+            newFish.GetComponentInChildren<TextMeshPro>().text = fishType.Key;
+
+            index++;
         }
     }
 
-    private double GetTotalValue(int[] fishes)
+    private int GetTotalValue(Dictionary<string, int> fishTypes)
     {
-        double sum = 0;
-        foreach(int fish in fishes)
+        int sum = 0;
+        foreach(var fishType in fishTypes)
         {
-            sum += fish;
+            sum += fishType.Value;
         }
 
         return sum;
