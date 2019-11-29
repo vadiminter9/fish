@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviour
 {
     bool IsColor = false;
     bool IsSize = false;
+    bool IsStage = false;
 
     public GameObject InputFieldPrefab;
     public GameObject TextPrefab;
@@ -34,7 +35,7 @@ public class MenuController : MonoBehaviour
         Debug.Log("Size is " + IsSize);
         Debug.Log("Color is " + IsColor);
 
-        foreach (var gameObject in GameObject.FindGameObjectsWithTag("SZ"))
+        foreach (var gameObject in GameObject.FindGameObjectsWithTag("STG").Union(GameObject.FindGameObjectsWithTag("SZ")))
         {
             Destroy(gameObject);
         }
@@ -48,7 +49,21 @@ public class MenuController : MonoBehaviour
         Debug.Log("Size is " + IsSize);
         Debug.Log("Color is " + IsColor);
 
-        foreach (var gameObject in GameObject.FindGameObjectsWithTag("CLR"))
+        foreach (var gameObject in GameObject.FindGameObjectsWithTag("STG").Union(GameObject.FindGameObjectsWithTag("CLR")))
+        {
+            Destroy(gameObject);
+        }
+
+        index = 0;
+    }
+
+    public void SetStage (bool isOn)
+    {
+        IsStage = !IsStage;
+        Debug.Log("Size is " + IsSize);
+        Debug.Log("Color is " + IsColor);
+
+        foreach (var gameObject in GameObject.FindGameObjectsWithTag("CLR").Union(GameObject.FindGameObjectsWithTag("SZ")))
         {
             Destroy(gameObject);
         }
@@ -93,7 +108,25 @@ public class MenuController : MonoBehaviour
                 sizePanel.GetComponentsInChildren<InputField>().Where(x => x.tag == "SZ").First().placeholder.GetComponent<Text>().text = "Size";
             }
         }
+        else if (IsStage)
+        {
+            if (index < 4)
+            {
+                var text = Instantiate(TextPrefab);
+                text.transform.parent = panel.transform;
+                text.transform.localPosition = new Vector3(text.transform.localPosition.x, text.transform.localPosition.y, 0);
+                text.transform.localScale = new Vector3(1, 1, 1);
+                text.GetComponent<Text>().text = (index + 1).ToString();
+                text.tag = "STGInf";
 
+                var inputField = Instantiate(InputFieldPrefab);
+                inputField.transform.parent = panel.transform;
+                inputField.transform.localPosition = new Vector3(inputField.transform.localPosition.x, inputField.transform.localPosition.y, 0);
+                inputField.transform.localScale = new Vector3(1, 1, 1);
+                inputField.tag = "STG";
+            }
+        }
+        
         addButton.transform.SetAsLastSibling();
         startButton.transform.SetAsLastSibling();
 
@@ -102,6 +135,8 @@ public class MenuController : MonoBehaviour
 
     public void StartSimulation()
     {
+        CrossSceneInformation.Fishes = new Dictionary<string, int>();
+
         if (IsColor)
         {
             CrossSceneInformation.Type = "Count";
@@ -127,6 +162,18 @@ public class MenuController : MonoBehaviour
                 var sizeInputValue = panel.GetComponentsInChildren<InputField>().Where(x => x.tag == "SZ").FirstOrDefault().text;
                 int size = Convert.ToInt32(sizeInputValue);
                 CrossSceneInformation.Fishes.Add(name, size);
+            }
+        }
+        else if (IsStage) {
+            CrossSceneInformation.Type = "Stage";
+
+            var stageInputFields = GameObject.FindObjectsOfType<InputField>().Where(x => x.tag == "STG");
+
+            var iteration = 3;
+            foreach (var field in stageInputFields)
+            {
+                CrossSceneInformation.Fishes.Add((iteration + 1).ToString(), Convert.ToInt32(field.text));
+                iteration--;
             }
         }
 

@@ -12,6 +12,8 @@ TagManager:
   - FISH
   - Name
   - SizePanel
+  - STG
+  - STGInf
   layers:
   - Default
   - TransparentFX
