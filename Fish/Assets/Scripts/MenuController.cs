@@ -121,9 +121,10 @@ public class MenuController : MonoBehaviour
                 crossSceneInfoIndex++;
             }
 
-            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Count)
+            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Length)
             {
                 CrossSceneInformation.Fishes[crossSceneInfoIndex] = 0;
+                crossSceneInfoIndex++;
             }
 
         }
@@ -146,12 +147,14 @@ public class MenuController : MonoBehaviour
                 crossSceneInfoIndex++;
             }
 
-            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Count)
+            while (crossSceneInfoIndex < CrossSceneInformation.Fishes.Length)
             {
                 CrossSceneInformation.Fishes[crossSceneInfoIndex] = 0;
+                crossSceneInfoIndex++;
             }
         }
 
         SceneManager.LoadScene("SampleScene");
+        Debug.Log("Loaded scene");
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5306,9 +5306,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fish:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2290900529913682130, guid: 6a53b724867b05b48a51142a8b7fb14b, type: 3}
+  - {fileID: 6379601434217711944, guid: 2ed7bb0d6bb438e4387b6494dc0562a4, type: 3}
+  - {fileID: 7552896290578497553, guid: 3374dbc949949144385608bec87153b5, type: 3}
+  - {fileID: 3408470404457541239, guid: 6d2129bd366f0fb40946e2b3326b0175, type: 3}
+  - {fileID: 2637111759875011873, guid: d4ffd5e8665448b4ca39788f06ba6b43, type: 3}
+  - {fileID: 672287289912183384, guid: 45bf693590dec7f46811dd4f19040b80, type: 3}
+  - {fileID: 3197880286296875139, guid: efcad945809aa2643b8a2ec5c05a80a3, type: 3}
+  - {fileID: 6601512589900613364, guid: 8f7129e83a1e4744f85fd9e842948eba, type: 3}
 --- !u!1001 &643178355
 PrefabInstance:
   m_ObjectHideFlags: 0
