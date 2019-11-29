@@ -5,7 +5,7 @@ using UnityEngine;
 public class FeedScript : MonoBehaviour
 {
     public GameObject feed;
-
+    System.Random random = new System.Random();
     // Update is called once per frame
     void Update()
     {
@@ -13,7 +13,7 @@ public class FeedScript : MonoBehaviour
         {
             Debug.Log("spawn");
             var gameObject = Instantiate(feed);
-            
+
 
             Vector3 screenPosition = Input.mousePosition;
             Ray castPoint = Camera.main.ScreenPointToRay(screenPosition);
@@ -21,7 +21,7 @@ public class FeedScript : MonoBehaviour
 
             if (Physics.Raycast(castPoint, out hit))
             {
-                gameObject.transform.position = new Vector3(hit.point.x, hit.point.y, -0.29f);
+                gameObject.transform.position = new Vector3(hit.point.x + (float)random.NextDouble(), hit.point.y + (float)(random.NextDouble()), -0.29f);
             }
         }
     }
