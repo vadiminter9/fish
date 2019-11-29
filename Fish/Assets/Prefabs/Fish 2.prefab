@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6379601434217711944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.7753744, y: -1.4095564, z: -16.221418}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 6063329796460424951}
   m_Father: {fileID: 0}
@@ -52,10 +52,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5870236672406713971}
     m_Modifications:
-    - target: {fileID: 100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
-      propertyPath: m_Name
-      value: TropicalFish04
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -99,6 +95,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
+      propertyPath: m_Name
+      value: TropicalFish04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}

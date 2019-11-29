@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
         foreach (var f in fish)
         {
             f.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            
         }
 
         this.GenerateFish(CrossSceneInformation.Fishes, CrossSceneInformation.Type);
