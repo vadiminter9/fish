@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-	public GameObject fish;
+	public GameObject[] fish;
     // Start is called before the first frame update
     void Start()
     {
-        for(int i=0; i<4; i++)
+        for(int i=0; i<15; i++)
 		{
-			Instantiate(fish);
+			Instantiate(fish[i]);
 		}
     }
 
