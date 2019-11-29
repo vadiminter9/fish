@@ -13,59 +13,55 @@ public class GameController : MonoBehaviour
             f.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
-        List<Group> groups = new List<Group>
-        {
-            new Group("Group 1", 15),
-            new Group("Group 2", 2),
-            new Group("Group 3", 7)
-        };
-
-        this.GenerateFish(groups, Type.Size);
+        this.GenerateFish(CrossSceneInformation.Fishes, CrossSceneInformation.Type);
     }
 
-    void GenerateFish(List<Group> groups, Type type)
+    void GenerateFish(int[] fishes, string type)
     {
-        if (type == Type.Amount)
+        if (type == "Count")
         {
-            this.AddFishByAmount(groups);
+            this.AddFishByAmount(fishes);
         }
         else
         {
-            this.AddFishBySize(groups);
+            this.AddFishBySize(fishes);
         }
     }
 
-    private void AddFishByAmount(List<Group> groups)
+    private void AddFishByAmount(int[] fishes)
     {
-        for (int i = 0; i < groups.Count; i++)
+        for (int i = 0; i < fishes.Length; i++)
         {
-            for (int j = 0; j < groups[i].Value; j++)
+            for (int j = 0; j < fishes[i]; j++)
             {
                 Instantiate(fish[i]);
             }
         }
     }
 
-    private void AddFishBySize(List<Group> groups)
+    private void AddFishBySize(int[] fishes)
     {
-        double totalSum = this.GetTotalValue(groups);
+        double totalSum = this.GetTotalValue(fishes);
 
         float difference = 0.0125f;
 
-        for (int i = 0; i < groups.Count; i++)
+        for (int i = 0; i < fishes.Length; i++)
         {
-            float toIncrease = (float)(0.25 + difference * GetPercent(groups[i].Value, totalSum));
-            fish[i].transform.localScale = new Vector3(toIncrease, toIncrease, toIncrease);
-            Instantiate(fish[i]);
+            if (fishes[i] != 0)
+            {
+                float toIncrease = (float)(0.25 + difference * GetPercent(fishes[i], totalSum));
+                fish[i].transform.localScale = new Vector3(toIncrease, toIncrease, toIncrease);
+                Instantiate(fish[i]);
+            }
         }
     }
 
-    private double GetTotalValue(List<Group> groups)
+    private double GetTotalValue(int[] fishes)
     {
         double sum = 0;
-        foreach(Group group in groups)
+        foreach(int fish in fishes)
         {
-            sum += group.Value;
+            sum += fish;
         }
 
         return sum;
@@ -75,23 +71,4 @@ public class GameController : MonoBehaviour
     {
         return value / totalvalue * 100;
     }
-}
-
-public class Group
-{
-    public Group(string name, int amount)
-    {
-        this.Name = name;
-        this.Value = amount;
-    }
-
-    public string Name { get; set; }
-
-    public double Value { get; set; }
-}
-
-public enum Type
-{
-    Amount,
-    Size
 }
