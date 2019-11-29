@@ -8,6 +8,8 @@ TagManager:
   - SZ
   - CLRInf
   - SZInf
+  - Name
+  - SizePanel
   layers:
   - Default
   - TransparentFX
