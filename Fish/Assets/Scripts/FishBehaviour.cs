@@ -17,6 +17,8 @@ public class FishBehaviour : MonoBehaviour
     bool isEating = false;
     GameObject currentFood;
 
+    public int Stage;
+
     void Start()
     {
         transform.position = GetNewDestination();
@@ -105,8 +107,12 @@ public class FishBehaviour : MonoBehaviour
 
     }
 
-    private static Vector3 GetNewDestination()
+    private Vector3 GetNewDestination()
     {
-        return new Vector3(Random.Range(-10, 14), Random.Range(-3, 6), Random.Range(-8, 5));
+        if (Stage == -1)
+        {
+            return new Vector3(Random.Range(-10, 14), Random.Range(-3, 7), Random.Range(-8, 5));
+        }
+        return new Vector3(Random.Range(-10, 14), Random.Range(-3.5f + 2.5f * (Stage - 1), -3.5f + 2.5f * Stage), Random.Range(-8, 5));
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using TMPro;
@@ -25,9 +26,13 @@ public class GameController : MonoBehaviour
         {
             this.AddFishByAmount(fishes);
         }
-        else
+        else if (type == "Size")
         {
             this.AddFishBySize(fishes);
+        }
+        else if (type == "Stage")
+        {
+            this.AddFishByStage(fishes);
         }
     }
 
@@ -39,6 +44,7 @@ public class GameController : MonoBehaviour
             for (int k = 0; k < fishType.Value; k++)
             {
                 var newFish = Instantiate(fish[index]);
+                newFish.GetComponent<FishBehaviour>().Stage = -1;
                 Destroy(newFish.GetComponentInChildren<TextMeshPro>());
             }
             index++;
@@ -59,7 +65,23 @@ public class GameController : MonoBehaviour
 
             var newFish = Instantiate(fish[index]);
             newFish.GetComponentInChildren<TextMeshPro>().text = fishType.Key;
+            newFish.GetComponent<FishBehaviour>().Stage = -1;
+            index++;
+        }
+    }
 
+    private void AddFishByStage(Dictionary<string, int> fishTypes)
+    {
+        int index = 0;
+        foreach (var fishType in fishTypes)
+        {
+            for (int k = 0; k < fishType.Value; k++)
+            {
+                fish[index].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                var newFish = Instantiate(fish[index]);
+                newFish.GetComponent<FishBehaviour>().Stage = Convert.ToInt32(fishType.Key);
+                Destroy(newFish.GetComponentInChildren<TextMeshPro>());
+            }
             index++;
         }
     }

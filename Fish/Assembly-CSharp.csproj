@@ -64,9 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CrossSceneInformation.cs" />
+    <Compile Include="Assets\Scripts\FeedBehaviour.cs" />
+    <Compile Include="Assets\Scripts\FeedScript.cs" />
     <Compile Include="Assets\Scripts\FishBehaviour.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
+    <Compile Include="Assets\Scripts\SampleSceneMenu.cs" />
     <Compile Include="Assets\Scripts\TextBehaviour.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
