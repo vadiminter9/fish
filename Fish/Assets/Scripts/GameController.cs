@@ -5,13 +5,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 	public GameObject[] fish;
+
     // Start is called before the first frame update
     void Start()
     {
         foreach (var f in fish)
         {
             f.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            
         }
 
         this.GenerateFish(CrossSceneInformation.Fishes, CrossSceneInformation.Type);

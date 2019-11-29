@@ -52,6 +52,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5870236672406713971}
     m_Modifications:
+    - target: {fileID: 100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
+      propertyPath: m_Name
+      value: TropicalFish04
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
+      propertyPath: m_TagString
+      value: FISH
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -95,10 +103,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}
-      propertyPath: m_Name
-      value: TropicalFish04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2425f83c5166ee14fa4ada510840d417, type: 3}

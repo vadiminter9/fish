@@ -8,11 +8,14 @@ public class FishBehaviour : MonoBehaviour
 {
     System.Random random = new System.Random();
     public float speed = 1;
-    private const float destinationDelata = 3f;
+    private const float destinationDelata = 1.5f;
     private const float angleDelta = 6f;
 
     private bool firstStart = true;
     private Vector3 nextDestination;
+
+    bool isEating = false;
+    GameObject currentFood;
 
     void Start()
     {
@@ -25,18 +28,53 @@ public class FishBehaviour : MonoBehaviour
 
     void Update()
     {
+        GameObject[] feeds = GameObject.FindGameObjectsWithTag("FEED");
+
+        if (feeds.Length > 0)
+        {
+            if (!isEating)
+            {
+                currentFood = feeds[random.Next(0, feeds.Length)];
+            }
+            if (currentFood != null && currentFood.transform.position.y > -4.2)
+            {
+                if (currentFood.transform.position.y < -3.0)
+                { this.nextDestination = currentFood.transform.position; }
+                else
+                {
+                    this.nextDestination = currentFood.transform.position + new Vector3(0, 1.5f, 0);
+                }
+            }
+            else
+            {
+                isEating = false;
+            }
+
+            isEating = true;
+            speed = 3;
+        }
+
         float dx = nextDestination.x - transform.position.x;
         float dy = nextDestination.y - transform.position.y;
+        //float dz = nextDestination.z - transform.position.z;
 
         bool gotPosition = Math.Abs(dx) < destinationDelata &&
              Math.Abs(dy) < destinationDelata;
 
         if (gotPosition)
-        {
+        {           
+            if (currentFood != null)
+            {
+                Destroy(currentFood);
+            }
+
             this.nextDestination = GetNewDestination();
+            isEating = false;
+            speed = 1;
         }
 
         float alpha = (float)Math.Atan2(dy, dx);
+        //float cosBeta = (float)Math.Cos(Math.Abs(dz) / (Math.Sqrt(dx * dx + dy * dy + dz * dz)));
 
         Vector3 position = transform.position;
 
@@ -45,6 +83,9 @@ public class FishBehaviour : MonoBehaviour
 
         var yMove = speed * (float)Math.Sin(alpha) * Time.deltaTime;
         position.y = position.y + yMove;
+
+        //var zMove = speed * cosBeta * Time.deltaTime;
+        //position.z = position.z + zMove;
 
         transform.position = position;
 

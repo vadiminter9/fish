@@ -8,6 +8,8 @@ TagManager:
   - SZ
   - CLRInf
   - SZInf
+  - FEED
+  - FISH
   layers:
   - Default
   - TransparentFX
