@@ -2,28 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
 
 public class FishBehaviour : MonoBehaviour
 {
     System.Random random = new System.Random();
-    public float speed = 100f;
-    // Start is called before the first frame update
+    public float speed = 1;
+    private const float destinationDelata = 3f;
+
+    private bool firstStart = true;
+    private Vector2 nextDestination;
+
     void Start()
     {
-
+        nextDestination = GetNewDestination();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        /*float horizontal = Random.Next();
-		float vertical = Random.Next();
-       float horizontal = Input.GetAxis("Horizontal");
-       float vertical = Input.GetAxis("Vertical");*/
+        float dx = nextDestination.x - transform.position.x;
+        float dy = nextDestination.y - transform.position.y;
+
+        bool gotPosition = Math.Abs(dx) < destinationDelata &&
+             Math.Abs(dy) < destinationDelata;
+
+        if (gotPosition)
+        {
+            this.nextDestination = GetNewDestination();
+        }
+
+        float alpha = (float)Math.Atan2(dy, dx);
 
         Vector2 position = transform.position;
-        position.x = position.x + speed * (float)random.NextDouble() * Time.deltaTime;
-        position.y = position.y + speed * (float)random.NextDouble() * Time.deltaTime;
+
+        var xMove = speed * (float)Math.Cos(alpha) * Time.deltaTime;
+        position.x = position.x + xMove;
+
+        var yMove = speed * (float)Math.Sin(alpha) * Time.deltaTime;
+        position.y = position.y + yMove;
         transform.position = position;
+    }
+
+    private static Vector2 GetNewDestination()
+    {
+        return new Vector2(Random.Range(-10, 10), Random.Range(-5, 5));
     }
 }
